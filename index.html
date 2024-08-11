@@ -1,68 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background-image: url('/static/funbot.jpg'); /* Ensure the image is in the correct folder */
-            background-size: cover; /* Ensures the image covers the whole background */
-            background-position: center; /* Centers the image */
-            background-repeat: no-repeat; /* Prevents repeating the image */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Aligns chat container to the left */
+            height: 100vh;
+            background-image: url('/static/funbot.jpg'); /* Background image */
+            background-size: cover; /* Cover the entire background */
+            background-position: center;
+            background-repeat: no-repeat;
         }
         #chat-container {
-            width: 450px; /* Adjust the width of the chat container */
-            height: 550px; /* Adjust the height of the chat container */
-            margin: 20px; /* Add margin around the chat container */
-            position: absolute; /* Position it absolutely */
-            left: 20px; /* Position it 20px from the left of the viewport */
-            top: 10px; /* Position it 20px from the top of the viewport */
-            background: rgba(255, 255, 255, 0.8); /* Adds a slight background color to make text more readable */
-            padding: 20px;
-            border-radius: 10px; /* Adds rounded corners to the chat container */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adds a slight shadow for a 3D effect */
+            width: 450px; /* Adjusted width */
+            height: 550px; /* Adjusted height */
+            margin-left: 30px; /* Margin to give some space from the left */
+            background: rgba(255, 255, 255, 0.85); /* Lighter background with more transparency */
+            padding: 30px; /* Increased padding */
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow for a 3D effect */
+            display: flex;
+            flex-direction: column;
         }
         #messages {
             border: 1px solid #ddd;
-            padding: 10px;
-            height: 350px; /* Adjusted height to fit the new container size */
+            padding: 15px;
+            height: 400px; /* Adjusted height to fit new container */
             overflow-y: auto;
+            background-color: #fff;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+            margin-bottom: 20px;
         }
         .message {
-            margin: 5px 0;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f1f1f1;
         }
         .user-message {
-            color: blue;
+            color: #007bff;
+            text-align: right; /* Align user messages to the right */
+            background-color: #e9f5ff;
         }
         .bot-message {
-            color: green;
+            color: #28a745;
+            text-align: left; /* Align bot messages to the left */
+            background-color: #e0ffe4;
         }
         #chat-form {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
         }
         #message {
             flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
+            padding: 15px;
+            border: 1px solid #ccc;
             border-radius: 4px;
             margin-right: 10px;
+            font-size: 16px;
         }
         button {
-            padding: 10px 20px;
+            padding: 15px 25px;
             border: none;
             background-color: #007bff;
             color: white;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease; /* Smooth transition on hover */
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
         }
     </style>
 </head>
 <body>
     <div id="chat-container">
-        <h1>FUNBOT</h1>
+        <h1 style="text-align:center; color:#333;">FUNBOT</h1>
         <div id="messages"></div>
         <form id="chat-form">
             <input type="text" id="message" name="message" placeholder="Type your message..." required>

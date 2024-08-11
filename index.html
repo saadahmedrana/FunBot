@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-image: url('/static/funbot.jpg'); /* Ensure the image is in the correct folder */
+            background-size: cover; /* Ensures the image covers the whole background */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents repeating the image */
+        }
+        #chat-container {
+            width: 450px; /* Adjust the width of the chat container */
+            height: 550px; /* Adjust the height of the chat container */
+            margin: 20px; /* Add margin around the chat container */
+            position: absolute; /* Position it absolutely */
+            left: 20px; /* Position it 20px from the left of the viewport */
+            top: 10px; /* Position it 20px from the top of the viewport */
+            background: rgba(255, 255, 255, 0.8); /* Adds a slight background color to make text more readable */
+            padding: 20px;
+            border-radius: 10px; /* Adds rounded corners to the chat container */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adds a slight shadow for a 3D effect */
+        }
+        #messages {
+            border: 1px solid #ddd;
+            padding: 10px;
+            height: 350px; /* Adjusted height to fit the new container size */
+            overflow-y: auto;
+        }
+        .message {
+            margin: 5px 0;
+        }
+        .user-message {
+            color: blue;
+        }
+        .bot-message {
+            color: green;
+        }
+        #chat-form {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        #message {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h1>FUNBOT</h1>
+        <div id="messages"></div>
+        <form id="chat-form">
+            <input type="text" id="message" name="message" placeholder="Type your message..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('chat-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const messageInput = document.getElementById('message');
+            const message = messageInput.value;
+            messageInput.value = '';
+            appendMessage('You', message, 'user-message');
+
+            fetch('http://127.0.0.1:5000/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: message,
+                    context: [],  // You can add context here if needed
+                    session: null // You can specify a session if needed
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                appendMessage('Bot', data.reply, 'bot-message');
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        function appendMessage(sender, text, className) {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message ' + className;
+            messageDiv.textContent = sender + ': ' + text;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
+</body>
+</html>
